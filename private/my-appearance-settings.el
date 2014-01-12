@@ -2,15 +2,14 @@
 ;; Appearance
 
 ;; Not for puTTY
-(if window-system
+(when window-system
     (load-theme 'zenburn t)
    (if (> emacs-major-version 23)
         (load-theme 'zenburn t)
       (progn
         (require 'color-theme)
         (color-theme-initialize)
-        (color-theme-clarity)))
-  (set-background-color "#202020"))
+        (color-theme-clarity))))
 
 (if (member "Consolas" (font-family-list))
   (set-face-attribute 'default nil :font "Consolas")

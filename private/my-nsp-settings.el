@@ -1,7 +1,7 @@
 ;; ------------------------------------------------------------
 ;; Nsp specific build stuff
 
-(setq nsp-branches-alist '(("DEV-SP115" . "/home/johanst/exthd/DEV-SP115/server")
+(setq nsp-branches-alist '(("DEV-SP115" . "/home/johanst/extflash/DEV-SP115/server")
                            ("INT-Server" . "/home/johanst/INT-Server/server")
                            ("INT-V140-SP1" . "/home/johanst/INT-V140-SP1/packages/commons/components/C3Po")
                            ("RB-1.3" . "/home/johanst/RB-1.3/packages/commons/components/C3Po")

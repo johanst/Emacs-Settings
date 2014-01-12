@@ -10,7 +10,7 @@
 (setq url-http-attempt-keepalives nil)
 
 (defvar ensure-packages
-  '(zenburn-theme column-marker protobuf-mode)
+  '(zenburn-theme column-marker protobuf-mode ace-jump-mode key-chord)
   "A list of packages to ensure are installed at launch.")
 
 (defun ensure-packages-package-installed-p (p)
@@ -62,6 +62,8 @@
 ;; ------------------------------------------------------------
 ;; Global keymap modifications
 
+(key-chord-mode 1)
+
 ;; Navigation
 (global-set-key [f1] 'jump-to-register)
 (global-set-key [M-f1] 'point-to-register)
@@ -78,6 +80,9 @@
 (global-set-key [M-right] 'windmove-right)
 (global-set-key [M-up]    'windmove-up)
 (global-set-key [M-down]  'windmove-down)
+
+(key-chord-define-global "jj" 'ace-jump-char-mode)
+(key-chord-define-global "JJ" 'ace-jump-line-mode)
 
 ;; Editing
 (global-set-key (kbd "M-$") 'query-replace-regexp)

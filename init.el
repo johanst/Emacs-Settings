@@ -66,17 +66,8 @@
 (key-chord-mode 1)
 
 ;; Navigation
-(global-set-key [f1] 'jump-to-register)
-(global-set-key [M-f1] 'point-to-register)
-(global-set-key [C-f1] 'window-configuration-to-register)
-
-(global-set-key [f5] 'ido-find-file-in-tag-files)
-
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "C-o") 'other-window)
-(global-set-key [f6] 'previous-buffer)
-(global-set-key [C-f6] 'next-buffer)
-(global-set-key [M-f6] 'kill-buffer)
 (global-set-key [M-left]  'windmove-left)
 (global-set-key [M-right] 'windmove-right)
 (global-set-key [M-up]    'windmove-up)
@@ -96,31 +87,16 @@
 ;; gdb settings
 
 ;; (if (> emacs-major-version 23)
-;;     (require 'gdb-ui))
+;;    (require 'gdb-ui))
 
 ;; (setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq gdb-create-source-file-list nil)
-(setq gdb-enable-debug t)
 
-;; Visual Studio inspired function keys
-(global-set-key [f9] 'gud-break)
-(global-set-key [M-f9] 'gud-remove)
-(global-set-key [C-f9] 'gud-tbreak)
-(global-set-key [f10] 'gud-next)
-(global-set-key [M-f10] 'gud-cont)
-(global-set-key [C-f10] 'gud-until)
-(global-set-key [f11] 'gud-step)
-(global-set-key [M-f11] 'gud-finish)
-(global-set-key [C-f11] 'gud-stepi)
-(global-set-key [f12] 'etags-select-find-tag-at-point)
-(global-set-key [C-f12] 'gud-up)
-(global-set-key [M-f12] 'gud-down)
-;; (global-set-key [M-f7] 'gdb-display-threads-buffer)
-(global-set-key [f8] 'gdb-restore-windows)
-
-(global-set-key [f7] 'recompile)
-(global-set-key [M-f7] 'in-directory)
+;; Byoubu leaves f10 and f11 for me
+(global-set-key [f10] 'recompile)
+(global-set-key [f11] 'gdb-restore-windows)
+;; (global-set-key [f11] 'in-directory)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 

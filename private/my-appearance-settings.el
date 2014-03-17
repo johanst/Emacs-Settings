@@ -11,6 +11,8 @@
         (color-theme-initialize)
         (color-theme-clarity))))
 
+(set-cursor-color "#FFFF00")
+
 (if (member "Consolas" (font-family-list))
   (set-face-attribute 'default nil :font "Consolas")
   (when (member "DejaVu Sans Mono" (font-family-list))

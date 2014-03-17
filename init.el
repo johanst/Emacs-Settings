@@ -10,7 +10,8 @@
 (setq url-http-attempt-keepalives nil)
 
 (defvar ensure-packages
-  '(zenburn-theme column-marker protobuf-mode ace-jump-mode key-chord)
+  '(zenburn-theme column-marker protobuf-mode ace-jump-mode key-chord auto-complete
+		  ac-etags)
   "A list of packages to ensure are installed at launch.")
 
 (defun ensure-packages-package-installed-p (p)
@@ -84,17 +85,23 @@
 (key-chord-define-global "jj" 'ace-jump-char-mode)
 (key-chord-define-global "JJ" 'ace-jump-line-mode)
 
+;; Anti electricity
+(key-chord-define-global "{{" '(lambda () (interactive) (insert-char ?{)))
+(key-chord-define-global "}}" '(lambda () (interactive) (insert-char ?})))
+(key-chord-define-global ";;" '(lambda () (interactive) (insert-char ?\;)))
+
 ;; Editing
 (global-set-key (kbd "M-$") 'query-replace-regexp)
 
 ;; gdb settings
 
-(if (> emacs-major-version 23)
-    (require 'gdb-ui))
+;; (if (> emacs-major-version 23)
+;;     (require 'gdb-ui))
 
 ;; (setq gdb-many-windows t)
 (setq gdb-show-main t)
-;; (setq gdb-create-source-file-list nil)
+(setq gdb-create-source-file-list nil)
+(setq gdb-enable-debug t)
 
 ;; Visual Studio inspired function keys
 (global-set-key [f9] 'gud-break)

@@ -75,30 +75,29 @@
 (interactive)
   (c-set-style "sternerup"))
 
+(defun c-default-include-guard-name(fullpath)
+  (file-name-nondirectory (file-name-sans-extension fullpath)))
+
+(setq c-custom-include-guard-name nil)
+
+(defun c-include-guard-name(fullpath)
+  (if c-custom-include-guard-name
+      (funcall c-custom-include-guard-name fullpath)
+    (c-default-include-guard-name fullpath)))
+
 (defun c-insert-include-guard ()
   (interactive)
   (if (buffer-file-name)
       (let*
-          ((fName (concat "tac_nsp_" (file-name-nondirectory (file-name-sans-extension buffer-file-name))))
-           (ifDef (concat "#ifndef " fName "_H" "\n#define " fName "_H" "\n"))
+          ((fName (upcase (c-include-guard-name buffer-file-name)))
+           (ifDef (concat "#ifndef " fName "_H_" "\n#define " fName "_H_" "\n"))
            (begin (point-marker))
            )
         (progn
-  					; If less then 5 characters are in the buffer, insert the class definition
-          (if (< (- (point-max) (point-min)) 5 )
-              (progn
-                (insert "\nclass " (capitalize fName) "{\npublic:\n\nprivate:\n\n};\n")
-                (goto-char (point-min))
-                (next-line-nomark 3)
-                (setq begin (point-marker))
-                )
-            )
-
-  					;Insert the Header Guard
           (goto-char (point-min))
           (insert ifDef)
           (goto-char (point-max))
-          (insert "\n#endif" " //" fName "_H")
+          (insert "\n#endif" " //" fName "_H_\n")
           (goto-char begin))
         )
                                         ;else
@@ -117,6 +116,8 @@
 (add-hook 'c-mode-common-hook '(lambda ()
  (define-key c-mode-base-map (kbd "C-c g") 'c-insert-include-guard)))
 (add-hook 'c-mode-common-hook '(lambda () (column-marker-3 80)))
+(add-hook 'c-mode-common-hook '(lambda ()
+ (add-to-list 'ac-sources 'ac-source-etags)))
 
 (setq ff-other-file-alist
       '(("\\.cc\\'"  (".hh" ".h"))

@@ -1,8 +1,7 @@
 ;; ------------------------------------------------------------
 ;; Nsp specific build stuff
 
-(setq nsp-branches-alist '(("DEV-SP115" . "/home/johanst/extflash/DEV-SP115/server")
-                           ("INT-Server" . "/home/johanst/INT-Server/server")
+(setq nsp-branches-alist '(("INT-Server" . "/home/johanst/INT-Server/server")
                            ("INT-V140-SP1" . "/home/johanst/INT-V140-SP1/packages/commons/components/C3Po")
                            ("RB-1.3" . "/home/johanst/RB-1.3/packages/commons/components/C3Po")
                            ("RB-1.4" . "/home/johanst/RB-1.4/packages/commons/components/C3Po")
@@ -73,6 +72,41 @@
            "Select project: "
            (mapcar '(lambda (elt) (car elt)) nsp-projects-alist)))
     (nsp-update-mode-string)))
+
+;; (nsp-get-include-guard-name
+;;  "~/johanst/INT-V150/server/nsp_servers/plugins/LONPlugIn/interface/nsp/Status.h")
+;; --> "TAC_NSP_LONPLUGIN_STATUS"
+(defun nsp-get-include-guard-name(fullpath)
+  (defun nsp-parent-directory(filepath)
+    (let ((dirname (file-name-directory filepath)))
+      (if dirname
+          (directory-file-name dirname)
+        nil)))
+  (defun nsp-add-to-include-guard-names(names dirname)
+    (let ((name (file-name-base dirname)))
+      (cond ((not dirname) names)
+            ((or (string-equal name "nsp")
+                 (string-equal name "interface")
+                 (string-equal name "include"))
+            (nsp-add-to-include-guard-names names (nsp-parent-directory dirname)))
+            ((or (string-equal name "")
+                 (string-equal name "plugins")
+                 (string-equal name "nsp_servers"))
+             names)
+            (t (nsp-add-to-include-guard-names
+                (cons name names)
+                (nsp-parent-directory dirname))))))
+  (concat "tac_nsp_"
+          (mapconcat
+           'identity
+           (nsp-add-to-include-guard-names
+            (list (file-name-base fullpath))
+            (nsp-parent-directory fullpath))
+           "_")))
+
+(nsp-get-include-guard-name "/home/johanst/extflash/INT-V150/server/nsp_servers/csc/runtimedbmanager/interface/nsp/ObjectHandle.h")
+
+(setq c-custom-include-guard-name 'nsp-get-include-guard-name)
 
 (condition-case nil
     (require 'my-local-nsp-branch-config)

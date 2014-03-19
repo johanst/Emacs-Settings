@@ -93,6 +93,9 @@
                  (string-equal name "plugins")
                  (string-equal name "nsp_servers"))
              names)
+            ((or (string-equal name "utilities")
+                 (string-equal name "server_test"))
+             (cons name names))
             (t (nsp-add-to-include-guard-names
                 (cons name names)
                 (nsp-parent-directory dirname))))))
@@ -103,8 +106,6 @@
             (list (file-name-base fullpath))
             (nsp-parent-directory fullpath))
            "_")))
-
-(nsp-get-include-guard-name "/home/johanst/extflash/INT-V150/server/nsp_servers/csc/runtimedbmanager/interface/nsp/ObjectHandle.h")
 
 (setq c-custom-include-guard-name 'nsp-get-include-guard-name)
 

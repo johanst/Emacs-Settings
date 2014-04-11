@@ -105,6 +105,67 @@
     )
 )
 
+(defun mycc-next-arg-in-scope(begin)
+  (interactive "p")
+  (let ((match nil))
+    (while
+        (and (not match)
+             (re-search-forward "[,)]" (point-max) t))
+      (let ((pointsave (point)))
+        (backward-char)
+        (backward-up-list)
+        (when (= begin (point))
+          (setq match (match-string 0)))
+        (goto-char pointsave)))
+    match))
+
+(defun mycc-has-multiple-args(&optional begin)
+  (interactive "p")
+  (save-excursion
+    (not (equal ")" (mycc-next-arg-in-scope begin)))))
+
+(defun mycc-delete-newlines()
+  (interactive)
+  (while (= 10 (following-char))
+    (delete-char 1)))
+
+(defun mycc-format-paren (num-lines begin)
+  (let ((match ""))
+    (goto-char begin)
+    (forward-char)
+    (mycc-delete-newlines)
+    (unless (= num-lines 0) (newline))
+    (while (and match (not (equal ")" match)))
+      (let ((pos (point)))
+        (setq match (mycc-next-arg-in-scope begin))
+        (when match
+          (let ((bound (point)))
+            (goto-char pos)
+            (mycc-delete-newlines)
+            (re-search-forward "\\s-*\\(.*[,)]\\)" bound t)
+            (replace-match "\\1"))
+          (when (equal "," match)
+            (if (= num-lines 2)
+                (newline)
+              (insert " "))))))
+    (c-indent-region begin (point))))
+
+(defun c-format-parentheses-contents ()
+  (interactive)
+  (save-excursion
+    (backward-up-list)
+    (let ((begin (point))
+          (begin-line-number (line-number-at-pos (point))))
+      (forward-list)
+      (let ((num-lines (- (line-number-at-pos (point)) begin-line-number))
+            (end (point)))
+        (mycc-format-paren
+         (cond
+          ((= num-lines 0) 1)
+          ((> num-lines 1) 0)
+          (t (if (mycc-has-multiple-args begin) 2 0)))
+          begin)))))
+
 ;; Use Auto-newline by default
 (add-hook 'c-mode-common-hook '(lambda () (c-toggle-auto-state 1)))
 (add-hook 'c-mode-common-hook '(lambda ()
@@ -115,6 +176,8 @@
  (define-key c-mode-base-map (kbd "C-c 2") 'c-set-horrible-indentation)))
 (add-hook 'c-mode-common-hook '(lambda ()
  (define-key c-mode-base-map (kbd "C-c g") 'c-insert-include-guard)))
+(add-hook 'c-mode-common-hook '(lambda ()
+ (define-key c-mode-base-map (kbd "C-c C-f") 'c-format-parentheses-contents)))
 (add-hook 'c-mode-common-hook '(lambda () (column-marker-3 80)))
 (add-hook 'c-mode-common-hook '(lambda ()
  (add-to-list 'ac-sources 'ac-source-etags)))

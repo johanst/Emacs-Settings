@@ -11,7 +11,7 @@
 
 (defvar ensure-packages
   '(zenburn-theme column-marker protobuf-mode ace-jump-mode key-chord auto-complete
-		  ac-etags)
+		  ac-etags magit)
   "A list of packages to ensure are installed at launch.")
 
 (defun ensure-packages-package-installed-p (p)
@@ -93,10 +93,11 @@
 (setq gdb-show-main t)
 (setq gdb-create-source-file-list nil)
 
-;; Byoubu leaves f10 and f11 for me
-(global-set-key [f10] 'recompile)
-(global-set-key [f11] 'gdb-restore-windows)
-;; (global-set-key [f11] 'in-directory)
+;; Byoubu leaves just a few keys for me
+(global-set-key [f7] 'recompile)
+(global-set-key [M-f7] 'in-directory)
+(global-set-key [f10] 'gdb-restore-windows)
+(global-set-key [f11] 'magit-status)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 

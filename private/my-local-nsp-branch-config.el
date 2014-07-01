@@ -1,4 +1,5 @@
-(nsp-add-branch "INT-V150" "/home/johanst/extflash/INT-V150/server")
-(nsp-add-branch "INT-V151-DSN" "/home/johanst/INT-V151-DSN/server")
+(nsp-add-branch "develop" "/home/johanst/extflash/develop/server")
+(nsp-add-branch "dsn-develop" "/home/johanst/dsn-develop/server")
+(nsp-add-branch "RB-1.5" "/home/johanst/exthd/RB-1.5/server")
 
 (provide 'my-local-nsp-branch-config)

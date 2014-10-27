@@ -11,7 +11,7 @@
 
 (defvar ensure-packages
   '(zenburn-theme column-marker protobuf-mode ace-jump-mode key-chord auto-complete
-		  ac-etags magit)
+		  ac-etags magit virtualenvwrapper)
   "A list of packages to ensure are installed at launch.")
 
 (defun ensure-packages-package-installed-p (p)
@@ -57,6 +57,7 @@
 (require 'my-general-editing-settings)
 (require 'my-ccmode-settings)
 (require 'my-rst-settings)
+(require 'my-python-settings)
 (require 'my-nsp-settings)
 (require 'my-appearance-settings)
 

@@ -99,6 +99,7 @@
 (global-set-key [M-f7] 'in-directory)
 (global-set-key [f10] 'gdb-restore-windows)
 (global-set-key [f11] 'magit-status)
+(global-set-key (kbd "C-x G") 'magit-status)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 

@@ -27,10 +27,11 @@
    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
 ;; virtualenv
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells)
-(if (eq system-type 'windows-nt)
-    (setq venv-location "F:\\Dev\\pyenv\\")
-  (setq venv-location "~/pyenv/"))
+(require 'pyvenv)
+(defun pyclient()
+  (interactive)
+  (if (eq system-type 'windows-nt)
+      (pyvenv-activate "F:\\Dev\\pyenv\\pyclient")
+    (pyvenv-activate "~/pyenv/pyclient")))
 
 (provide 'my-python-settings)

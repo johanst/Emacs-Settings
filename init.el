@@ -11,7 +11,7 @@
 
 (defvar ensure-packages
   '(zenburn-theme column-marker protobuf-mode ace-jump-mode key-chord auto-complete
-		  ac-etags magit virtualenvwrapper)
+		  ac-etags magit pyvenv)
   "A list of packages to ensure are installed at launch.")
 
 (defun ensure-packages-package-installed-p (p)

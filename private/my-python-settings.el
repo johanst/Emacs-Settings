@@ -26,12 +26,21 @@
    python-shell-completion-string-code
    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
-;; virtualenv
+;; virtualenv(wrapper)
 (require 'pyvenv)
 (defun pyclient()
   (interactive)
   (if (eq system-type 'windows-nt)
       (pyvenv-activate "F:\\Dev\\pyenv\\pyclient")
     (pyvenv-activate "~/pyenv/pyclient")))
+
+;; PYTHONPATH
+(defun set-pythonpath(path)
+  (interactive "DPYTHONPATH directory: ")
+  (let ((abspath (expand-file-name path)))
+    (setq pythonpath abspath)
+    (setenv "PYTHONPATH" abspath)))
+
+(add-hook 'inferior-python-mode-hook '(lambda () (setenv "PYTHONPATH" pythonpath)))
 
 (provide 'my-python-settings)

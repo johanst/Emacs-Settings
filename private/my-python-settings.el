@@ -31,16 +31,19 @@
 (defun pyclient()
   (interactive)
   (if (eq system-type 'windows-nt)
-      (pyvenv-activate "F:\\Dev\\pyenv\\pyclient")
-    (pyvenv-activate "~/pyenv/pyclient")))
+      (progn
+        (pyvenv-activate "F:\\Dev\\pyenv\\pyclient")
+        (setq pythonpath "F:\\Dev\\pyenv\\git\\develop\\server\\nsp_servers\\plugins\\LONPlugIn\\pyclient\\;F:\\Dev\\pyenv\\git\\develop\\pyclient\\source\\pycsp"))
+    (progn
+      (pyvenv-activate "~/pyenv/pyclient")
+      (setq pythonpath "/home/johanst/develop/server/nsp_servers/plugins/LONPlugIn/pyclient/:/home/johanst/develop/pyclient/source/pycsp")))
+  (setenv "PYTHONPATH" pythonpath))
 
-;; PYTHONPATH
+;; Manual PYTHONPATH (limitation is only one directory)
 (defun set-pythonpath(path)
   (interactive "DPYTHONPATH directory: ")
   (let ((abspath (expand-file-name path)))
     (setq pythonpath abspath)
     (setenv "PYTHONPATH" abspath)))
-
-(add-hook 'inferior-python-mode-hook '(lambda () (setenv "PYTHONPATH" pythonpath)))
 
 (provide 'my-python-settings)

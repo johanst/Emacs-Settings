@@ -28,16 +28,18 @@
 
 ;; virtualenv(wrapper)
 (require 'pyvenv)
+
 (defun pyclient()
   (interactive)
   (if (eq system-type 'windows-nt)
       (progn
         (pyvenv-activate "F:\\Dev\\pyenv\\pyclient")
-        (setq pythonpath "F:\\Dev\\pyenv\\git\\develop\\server\\nsp_servers\\plugins\\LONPlugIn\\pyclient\\;F:\\Dev\\pyenv\\git\\develop\\pyclient\\source\\pycsp"))
+        (setq pythonpath "F:\\Dev\\pyenv\\git\\develop\\server\\scripts\\testsupport;F:\\Dev\\pyenv\\git\\develop\\pyclient\\source\\pycsp"))
     (progn
       (pyvenv-activate "~/pyenv/pyclient")
-      (setq pythonpath "/home/johanst/develop/server/nsp_servers/plugins/LONPlugIn/pyclient/:/home/johanst/develop/pyclient/source/pycsp")))
+      (setq pythonpath "/home/johanst/develop/server/scripts/testsupport/:/home/johanst/develop/pyclient/source/pycsp")))
   (setenv "PYTHONPATH" pythonpath))
+
 
 ;; Manual PYTHONPATH (limitation is only one directory)
 (defun set-pythonpath(path)
@@ -45,5 +47,10 @@
   (let ((abspath (expand-file-name path)))
     (setq pythonpath abspath)
     (setenv "PYTHONPATH" abspath)))
+
+(require 'my-ccmode-settings)
+(add-hook 'python-mode-hook '(lambda ()
+ (define-key python-mode-map (kbd "C-c C-q") 'c-format-parentheses-contents)))
+(add-hook 'python-mode-hook '(lambda () (column-marker-3 80)))
 
 (provide 'my-python-settings)

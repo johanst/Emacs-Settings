@@ -29,6 +29,24 @@
 ;; virtualenv(wrapper)
 (require 'pyvenv)
 
+(defun pyclient-init-session()
+  (interactive)
+  (python-shell-send-string "\
+import pycsp.client\n\
+from pycsptest.helpers import create_folder, remove_folder\n\
+s = pycsp.client.logon(\"localhost\", 22222)\n"))
+
+(defun pyclient-create-empty-test-folder()
+  (interactive)
+  (python-shell-send-string "\
+remove_folder(s, \'~\', \'Test\')\n\
+create_folder(s, \'~\', \'Test\')\n"))
+
+(add-hook 'python-mode-hook '(lambda ()
+  (define-key inferior-python-mode-map (kbd "C-c i") 'pyclient-init-session)))
+(add-hook 'python-mode-hook '(lambda ()
+ (define-key inferior-python-mode-map (kbd "C-c c") 'pyclient-create-empty-test-folder)))
+
 (defun pyclient()
   (interactive)
   (if (eq system-type 'windows-nt)

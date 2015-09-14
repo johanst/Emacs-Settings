@@ -1,6 +1,13 @@
 ;; ------------------------------------------------------------
 ;; Python / PyClient
 
+;; On Ubuntu:
+;; mkdir ~/pyenv
+;; virtualenv -p /usr/bin/python3 pyclient
+;; source pyclient/bin/activate
+;; pip install ipython
+;; pip install -i http://10.158.238.251:8081/artifactory/Python-Packages/ pyasn1 pycsp pyhamcrest
+
 ;; IPython
 (if (eq system-type 'windows-nt)
     (setq
@@ -43,7 +50,7 @@ remove_folder(s, \'~\', \'Test\')\n\
 create_folder(s, \'~\', \'Test\')\n"))
 
 (add-hook 'python-mode-hook '(lambda ()
-  (define-key inferior-python-mode-map (kbd "C-c i") 'pyclient-init-session)))
+ (define-key inferior-python-mode-map (kbd "C-c i") 'pyclient-init-session)))
 (add-hook 'python-mode-hook '(lambda ()
  (define-key inferior-python-mode-map (kbd "C-c c") 'pyclient-create-empty-test-folder)))
 
@@ -55,7 +62,8 @@ create_folder(s, \'~\', \'Test\')\n"))
         (setq pythonpath "F:\\Dev\\pyenv\\git\\develop\\server\\scripts\\testsupport;F:\\Dev\\pyenv\\git\\develop\\pyclient\\source\\pycsp"))
     (progn
       (pyvenv-activate "~/pyenv/pyclient")
-      (setq pythonpath "/home/johanst/develop/server/scripts/testsupport/:/home/johanst/develop/pyclient/source/pycsp")))
+;;      (setq pythonpath "/home/johanst/develop/server/scripts/testsupport/:/home/johanst/develop/pyclient/source/pycsp")))
+      (setq pythonpath "/home/johanst/develop/server/scripts/testsupport/")))
   (setenv "PYTHONPATH" pythonpath))
 
 

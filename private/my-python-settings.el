@@ -46,8 +46,8 @@ s = pycsp.client.logon(\"localhost\", 22222)\n"))
 (defun pyclient-create-empty-test-folder()
   (interactive)
   (python-shell-send-string "\
-remove_folder(s, \'~\', \'Test\')\n\
-create_folder(s, \'~\', \'Test\')\n"))
+remove_folder(s, \'~\', \'TestFolder\')\n\
+create_folder(s, \'~\', \'TestFolder\')\n"))
 
 (add-hook 'python-mode-hook '(lambda ()
  (define-key inferior-python-mode-map (kbd "C-c i") 'pyclient-init-session)))

@@ -36,7 +36,6 @@
 ;; (provide 'ensure-packages)
 (ensure-packages-install-missing)
 
-(add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d/private")
 
 (require 'my-ido-settings)

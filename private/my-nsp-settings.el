@@ -121,6 +121,8 @@
         "../../interface/*"
         "../../include/*"
         "../../../source/*"
+        "../include/nsp/msg/*"
+        "../interface/nsp/msg/*"
         "../interface/nsp/impex/*"
         "../include/nsp/impex/*"))
 

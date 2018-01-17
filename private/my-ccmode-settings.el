@@ -7,9 +7,10 @@
 (setq-default indent-tabs-mode nil)
 (setq c-basic-offset 2)
 (setq c-max-one-liner-length 80)
+(setq uncrustify-config-path-for-project nil)
 
 (defconst my-c-style
-  '("stroustrup"
+  '("k&r"
     (c-basic-offset        . 2)
     (c-hanging-braces-alist     . ((defun-open after)
                                    (brace-list-open)
@@ -33,7 +34,9 @@
                                    defun-close-semi))
     (c-hanging-semi&comma-criteria . (c-semi&comma-no-newlines-for-oneline-inliners
                                       c-semi&comma-inside-parenlist))
-    (c-offsets-alist            . ((innamespace . 0)))
+    (c-offsets-alist            . ((innamespace . 0)
+                                   (arglist-cont . 4)
+                                   (arglist-cont-nonempty . 4)))
     )
   "My prefered C Programming Style")
 (c-add-style "sternerup" my-c-style)
@@ -64,7 +67,7 @@
 (setq c-default-style '((java-mode . "java")
                         (awk-mode . "awk")
                         (protobuf-mode . "sternerup")
-                        (other . "horrible")))
+                        (other . "sternerup")))
 
 ;; This allows quick buffer local switching between different
 ;; indentation styles.
@@ -97,7 +100,7 @@
           (goto-char (point-min))
           (insert ifDef)
           (goto-char (point-max))
-          (insert "\n#endif" " //" fName "_H_\n")
+          (insert "\n#endif" " /* " fName "_H_ */\n")
           (goto-char begin))
         )
                                         ;else
@@ -181,6 +184,15 @@
 (add-hook 'c-mode-common-hook '(lambda () (column-marker-3 80)))
 (add-hook 'c-mode-common-hook '(lambda ()
  (add-to-list 'ac-sources 'ac-source-etags)))
+;; In case uncrustify-config-path is set we override the default clang-format
+;; settings and use uncrustify instead
+(add-hook 'c-mode-common-hook '(lambda ()
+ (when uncrustify-config-path-for-project
+   (setq uncrustify-config-path uncrustify-config-path-for-project)
+   (define-key c-mode-base-map (kbd "C-c i") 'uncrustify)
+   (define-key c-mode-base-map (kbd "C-c u") 'uncrustify-buffer)
+   (uncrustify-mode))))
+
 
 (setq ff-other-file-alist
       '(("\\.cc\\'"  (".hh" ".h"))

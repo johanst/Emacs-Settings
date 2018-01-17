@@ -2,16 +2,33 @@
 (require 'cl)
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+;;                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.org/packages/")))
+
+;; (setq url-proxy-services
+;;   '(("no_proxy" . "^\\(localhost\\|10.*\\)")
+;;     ("http" . "http.proxy.com:port")
+;;     ("https" . "https.proxy.com:port")))
 
 (package-initialize)
 
 (setq url-http-attempt-keepalives nil)
 
 (defvar ensure-packages
-  '(zenburn-theme column-marker protobuf-mode ace-jump-mode key-chord auto-complete
-		  ac-etags magit pyvenv)
+  '(
+    zenburn-theme
+;;    column-marker
+    protobuf-mode
+    ace-jump-mode
+    key-chord auto-complete
+    clang-format
+    ac-etags
+    magit
+    pyvenv
+    plantuml-mode
+    adoc-mode
+    uncrustify-mode
+    )
   "A list of packages to ensure are installed at launch.")
 
 (defun ensure-packages-package-installed-p (p)
@@ -37,6 +54,18 @@
 (ensure-packages-install-missing)
 
 (add-to-list 'load-path "~/.emacs.d/private")
+(add-to-list 'load-path "~/.emacs.d/external") ;; manually downloaded as marmalade is broken
+
+;; Use bash to avoid all zsh fanciness in Emacs
+(setq shell-file-name "bash")
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+(ignore-errors
+  (require 'ansi-color)
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
 (require 'my-ido-settings)
 
@@ -52,16 +81,19 @@
 (setq org-startup-indented t)
 (global-set-key "\C-cl" 'org-store-link)
 
+(require 'column-marker)
+
 (require 'my-putty-settings)
 (require 'my-general-editing-settings)
 (require 'my-ccmode-settings)
 (require 'my-rst-settings)
 (require 'my-python-settings)
-(require 'my-nsp-settings)
 (require 'my-appearance-settings)
 
 ;; ------------------------------------------------------------
 ;; Global keymap modifications
+
+(global-unset-key "\C-z") ;; Just annoying when hit by mistake
 
 (key-chord-mode 1)
 
@@ -83,6 +115,16 @@
 
 ;; Editing
 (global-set-key (kbd "M-$") 'query-replace-regexp)
+
+;; clang-format
+(require 'clang-format)
+(global-set-key (kbd "C-c i") 'clang-format-region)
+(global-set-key (kbd "C-c u") 'clang-format-buffer)
+
+;; ediff
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-split-window-function 'split-window-horizontally)
+
 
 ;; gdb settings
 
@@ -111,8 +153,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-todo-keywords (quote ((sequence "TODO" "WAITING" "DONE"))))
+ '(package-selected-packages
+   (quote
+    (adoc-mode plantuml-mode zenburn-theme pyvenv protobuf-mode magit key-chord clang-format ace-jump-mode ac-etags)))
  '(show-trailing-whitespace t)
- '(sql-sqlite-program "sqlite3"))
+ '(sql-sqlite-program "sqlite3")
+ '(woman-locale "en_US.UTF-8"))
  '(custom-safe-themes (quote ("f715f948867d85fa384b6c20d793dfd126d71996afd62f9d003705c960929977" default)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -67,6 +67,8 @@
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 
+(global-set-key [f10] 'nil)
+
 (require 'my-ido-settings)
 
 (require 'uniquify)
@@ -138,7 +140,8 @@
 ;; Byoubu leaves just a few keys for me
 (global-set-key [f7] 'recompile)
 (global-set-key [M-f7] 'in-directory)
-(global-set-key [f10] 'gdb-restore-windows)
+(if (not (global-key-binding [f10] nil))
+    (global-set-key [f10] 'gdb-restore-windows))
 (global-set-key [f11] 'magit-status)
 (global-set-key (kbd "C-x G") 'magit-status)
 

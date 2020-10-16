@@ -66,6 +66,30 @@
   "Horrible indentation C Programming Style")
 (c-add-style "horrible" horrible-c-style)
 
+(defconst jonasc-c-style
+  '("bsd" (c-basic-offset        . 4)
+    (c-hanging-braces-alist     . ((statement-cont)
+                                   (block-close . c-snug-do-while)
+                                   (namespace-open)
+                                   (namespace-close)
+                                   (inline-open)
+                                   (inline-close after)))
+    (c-cleanup-list             . (scope-operator
+                                   one-liner-defun
+                                   empty-defun-braces
+                                   defun-close-semi))
+    (c-hanging-semi&comma-criteria . (c-semi&comma-no-newlines-for-oneline-inliners
+                                      c-semi&comma-inside-parenlist))
+    (c-offsets-alist            . ((innamespace . 0)
+                                   (case-label . 2)
+                                   (arglist-intro . 4)
+                                   (statement-cont . 4)))
+
+)
+  "JonasC indentation C Programming Style")
+(c-add-style "jonasc" jonasc-c-style)
+
+
 (setq c-default-style '((java-mode . "java")
                         (awk-mode . "awk")
                         (protobuf-mode . "sternerup")
@@ -79,6 +103,10 @@
 (defun c-set-readable-indentation ()
 (interactive)
   (c-set-style "sternerup"))
+(defun c-set-jonasc-indentation ()
+(interactive)
+  (c-set-style "jonasc"))
+
 
 (defun c-default-include-guard-name(fullpath)
   (file-name-nondirectory (file-name-sans-extension fullpath)))

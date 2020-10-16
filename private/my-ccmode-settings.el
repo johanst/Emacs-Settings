@@ -6,8 +6,6 @@
 (setq my-ccmode-settings-project-path "")
 (setq uncrustify-config-path-for-project nil)
 
-;; will introduce spaces instead of tabs by default.
-(setq-default indent-tabs-mode nil)
 (setq c-basic-offset 2)
 (setq c-max-one-liner-length 80)
 
@@ -201,6 +199,9 @@
 
 ;; Use Auto-newline by default
 (add-hook 'c-mode-common-hook '(lambda () (c-toggle-auto-state 1)))
+;; will introduce spaces instead of tabs by default.
+(add-hook 'c-mode-common-hook '(lambda () (setq indent-tabs-mode nil)))
+(add-hook 'c-mode-common-hook '(lambda () (setq c-tab-always-indent t)))
 (add-hook 'c-mode-common-hook '(lambda ()
  (define-key c-mode-base-map (kbd "C-c o") 'ff-find-other-file)))
 (add-hook 'c-mode-common-hook '(lambda ()

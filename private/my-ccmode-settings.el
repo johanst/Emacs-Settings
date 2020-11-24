@@ -6,6 +6,7 @@
 (setq my-ccmode-settings-project-path "")
 (setq uncrustify-config-path-for-project nil)
 
+(setq-default indent-tabs-mode nil)
 (setq c-basic-offset 2)
 (setq c-max-one-liner-length 80)
 
@@ -35,6 +36,7 @@
     (c-hanging-semi&comma-criteria . (c-semi&comma-no-newlines-for-oneline-inliners
                                       c-semi&comma-inside-parenlist))
     (c-offsets-alist            . ((innamespace . 0)
+                                   (arglist-intro . 4)
                                    (arglist-cont . 4)
                                    (arglist-cont-nonempty . 4)))
     )

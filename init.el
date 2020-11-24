@@ -70,7 +70,9 @@
 (defun my-revert-buffer-preserve-modes ()
   (interactive)
   (if (eq major-mode 'compilation-mode)
-      (revert-buffer t t t)
+      (progn
+	(revert-buffer t t t)
+	(compilation-mode))
     (revert-buffer nil nil t)))
 
 (global-set-key [f10] 'nil)

@@ -24,4 +24,14 @@
 (scroll-bar-mode -1)
 (setq visible-bell 1)
 
+(defun toggle-fullscreen ()
+  (interactive)
+  (if (frame-parameter nil 'fullscreen)
+      (progn (set-frame-parameter nil 'fullscreen nil)
+             (menu-bar-mode 1))
+    (progn (set-frame-parameter nil 'fullscreen 'fullboth)
+           (menu-bar-mode -1))))
+
+(global-set-key [C-M-S-f11] 'toggle-fullscreen)
+
 (provide 'my-appearance-settings)

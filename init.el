@@ -1,9 +1,10 @@
 (require 'package)
 (require 'cl)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 ;;                         ("marmalade" . "https://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")))
+                         ("melpa" . "https://melpa.org/packages/")))
 
 ;; (setq url-proxy-services
 ;;   '(("no_proxy" . "^\\(localhost\\|10.*\\)")

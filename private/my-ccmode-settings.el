@@ -37,7 +37,7 @@
                                       c-semi&comma-inside-parenlist))
     (c-offsets-alist            . ((innamespace . 0)
                                    (arglist-intro . 4)
-                                   (arglist-cont . 4)
+                                   (arglist-cont . 0)
                                    (arglist-cont-nonempty . 4)))
     )
   "My prefered C Programming Style")

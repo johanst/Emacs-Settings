@@ -34,4 +34,9 @@
 
 (global-set-key [C-M-S-f11] 'toggle-fullscreen)
 
+(require 'ansi-color)
+(defun display-ansi-colors ()
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
 (provide 'my-appearance-settings)

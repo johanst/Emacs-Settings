@@ -168,7 +168,7 @@
  '(org-todo-keywords (quote ((sequence "TODO" "WAITING" "DONE"))))
  '(package-selected-packages
    (quote
-    (go-mode meson-mode typescript-mode markdown-mode json-mode adoc-mode plantuml-mode zenburn-theme pyvenv protobuf-mode magit key-chord clang-format ace-jump-mode ac-etags)))
+    (rust-mode go-mode meson-mode typescript-mode markdown-mode json-mode adoc-mode plantuml-mode zenburn-theme pyvenv protobuf-mode magit key-chord clang-format ace-jump-mode ac-etags)))
  '(show-trailing-whitespace t)
  '(sql-sqlite-program "sqlite3")
  '(woman-locale "en_US.UTF-8"))

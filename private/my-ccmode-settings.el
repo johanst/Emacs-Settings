@@ -7,12 +7,12 @@
 (setq uncrustify-config-path-for-project nil)
 
 (setq-default indent-tabs-mode nil)
-(setq c-basic-offset 2)
+(setq c-basic-offset 4)
 (setq c-max-one-liner-length 80)
 
 (defconst my-c-style
   '("k&r"
-    (c-basic-offset        . 2)
+    (c-basic-offset        . 4)
     (c-hanging-braces-alist     . ((defun-open after)
                                    (brace-list-open)
                                    (brace-entry-open)

@@ -1,3 +1,7 @@
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
 (require 'package)
 (require 'cl)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -100,6 +104,7 @@
 (require 'my-rst-settings)
 (require 'my-python-settings)
 (require 'my-appearance-settings)
+(require 'my-rust-settings)
 
 ;; ------------------------------------------------------------
 ;; Global keymap modifications

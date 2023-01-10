@@ -29,8 +29,14 @@
     ac-etags
     magit
     pyvenv
-    plantuml-mode
     adoc-mode
+    helm
+    company
+    flycheck
+    rtags
+    company-rtags
+    flycheck-rtags
+    helm-rtags
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -167,6 +173,7 @@
    '(helm-rtags company-rtags flycheck-rtags helm flycheck company rtags rust-mode go-mode meson-mode typescript-mode markdown-mode json-mode adoc-mode plantuml-mode zenburn-theme pyvenv magit key-chord clang-format ace-jump-mode ac-etags))
  '(show-trailing-whitespace t)
  '(sql-sqlite-program "sqlite3")
+ '(warning-suppress-types '(((package reinitialization))))
  '(woman-locale "en_US.UTF-8"))
  '(custom-safe-themes (quote ("f715f948867d85fa384b6c20d793dfd126d71996afd62f9d003705c960929977" default)))
 (custom-set-faces

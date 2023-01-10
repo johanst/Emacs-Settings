@@ -199,23 +199,62 @@
           ((= num-lines 0) 1)
           ((> num-lines 1) 0)
           (t (if (mycc-has-multiple-args begin) 2 0)))
-          begin)))))
+         begin)))))
+
+;; rtags
+;; Build and install rtags from https://github.com/Andersbakken/rtags
+;; Make sure rtags-path is correct.
+;; Generate compilation database with
+;; ninja -C $NINJA_BUILD_DIR -t compdb -x c_COMPILER cpp_COMPILER >$SRC_DIR/compile_commands.json
+
+(require 'rtags)
+(require 'company)
+(require 'flycheck-rtags)
+
+(add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
+(setq rtags-completions-enabled t)
+(setq rtags-path "/home/johast/hacking/rtags/build/bin")
+(setq rtags-process-flags "-j 4 --no-filesystem-watcher")
+
+;; ensure that we use only rtags checking
+;; https://github.com/Andersbakken/rtags#optional-1
+(defun setup-flycheck-rtags ()
+  (interactive)
+  (flycheck-select-checker 'rtags)
+  ;; RTags creates more accurate overlays.
+  (setq-local flycheck-highlighting-mode nil)
+  (setq-local flycheck-check-syntax-automatically nil))
+
+;; install standard rtags keybindings. Do M-. on the symbol below to
+;; jump to definition and see the keybindings.
+(rtags-enable-standard-keybindings)
+;; comment this out if you don't have or don't use helm
+(setq rtags-use-helm t)
+(setq rtags-display-result-backend 'helm)
+;; company completion setup
+(setq rtags-autostart-diagnostics t)
+(rtags-diagnostics)
+(setq rtags-completions-enabled t)
+(push 'company-rtags company-backends)
+(global-company-mode)
+(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+;; use rtags flycheck mode -- clang warnings shown inline
+;; c-mode-common-hook is also called by c++-mode
+(add-hook 'c-mode-common-hook #'setup-flycheck-rtags)
 
 ;; Use Auto-newline by default
 (add-hook 'c-mode-common-hook '(lambda () (c-toggle-auto-state 1)))
 ;; will introduce spaces instead of tabs by default.
 (add-hook 'c-mode-common-hook '(lambda () (setq indent-tabs-mode nil)))
 (add-hook 'c-mode-common-hook '(lambda () (setq c-tab-always-indent t)))
-(add-hook 'c-mode-common-hook '(lambda ()
- (define-key c-mode-base-map (kbd "C-c o") 'ff-find-other-file)))
-(add-hook 'c-mode-common-hook '(lambda ()
- (define-key c-mode-base-map (kbd "C-c 1") 'c-set-readable-indentation)))
-(add-hook 'c-mode-common-hook '(lambda ()
- (define-key c-mode-base-map (kbd "C-c 2") 'c-set-horrible-indentation)))
-(add-hook 'c-mode-common-hook '(lambda ()
- (define-key c-mode-base-map (kbd "C-c g") 'c-insert-include-guard)))
-(add-hook 'c-mode-common-hook '(lambda ()
- (define-key c-mode-base-map (kbd "C-c C-f") 'c-format-parentheses-contents)))
+
+(define-key c-mode-base-map (kbd "M-.") (function rtags-find-symbol-at-point))
+(define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-at-point))
+
+(define-key c-mode-base-map (kbd "C-c 1") (function c-set-readable-indentation))
+(define-key c-mode-base-map (kbd "C-c 2") (function c-set-horrible-indentation))
+(define-key c-mode-base-map (kbd "C-c g") (function c-insert-include-guard))
+(define-key c-mode-base-map (kbd "C-c C-f") (function c-format-parentheses-contents))
 (add-hook 'c-mode-common-hook '(lambda () (column-marker-3 80)))
 (add-hook 'c-mode-common-hook '(lambda ()
  (add-to-list 'ac-sources 'ac-source-etags)))

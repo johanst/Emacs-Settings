@@ -23,7 +23,6 @@
   '(
     zenburn-theme
 ;;    column-marker
-    protobuf-mode
     ace-jump-mode
     key-chord auto-complete
     clang-format
@@ -32,7 +31,6 @@
     pyvenv
     plantuml-mode
     adoc-mode
-    uncrustify-mode
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -86,12 +84,6 @@
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
-
-(require 'etags-select)
-(global-set-key "\M-?" 'etags-select-find-tag-at-point)
-(global-set-key "\M-." 'etags-select-find-tag)
-
-(require 'protobuf-mode)
 
 (setq org-startup-indented t)
 (global-set-key "\C-cl" 'org-store-link)

@@ -4,7 +4,6 @@
 (require 'column-marker)
 
 (setq my-ccmode-settings-project-path "")
-(setq uncrustify-config-path-for-project nil)
 
 (setq-default indent-tabs-mode nil)
 (setq c-basic-offset 4)
@@ -138,6 +137,9 @@
     )
 )
 
+;; LISP-hacked formatting tool for fixing up long arguments lists in function calls.
+;; clang-format does it much better...
+
 (defun mycc-next-arg-in-scope(begin)
   (interactive "p")
   (let ((match nil))
@@ -217,24 +219,6 @@
 (add-hook 'c-mode-common-hook '(lambda () (column-marker-3 80)))
 (add-hook 'c-mode-common-hook '(lambda ()
  (add-to-list 'ac-sources 'ac-source-etags)))
-;; In case uncrustify-config-path is set we override the default clang-format
-;; settings and use uncrustify instead, but only if the current file is within
-;; the current project (defined by my-ccmode-settings-project-path).
-;; NB! 't' at the end to append to the hooks, which means a local keymap is made
-;; from a copy including the keymappings above.
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             (when
-                 (and uncrustify-config-path-for-project
-                      (string-match-p my-ccmode-settings-project-path
-                                      buffer-file-name))
-               (setq uncrustify-config-path uncrustify-config-path-for-project)
-               (use-local-map (copy-keymap c-mode-base-map))
-               (local-set-key (kbd "C-c i") 'uncrustify)
-;;   (define-key c-mode-base-map (kbd "C-c i") 'uncrustify)
-;;   (define-key c-mode-base-map (kbd "C-c u") 'uncrustify-buffer)
-   (uncrustify-mode))) t)
-
 
 (setq ff-other-file-alist
       '(("\\.cc\\'"  (".hh" ".h"))

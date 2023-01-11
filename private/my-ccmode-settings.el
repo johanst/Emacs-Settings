@@ -208,13 +208,7 @@
 ;; ninja -C $NINJA_BUILD_DIR -t compdb -x c_COMPILER cpp_COMPILER >$SRC_DIR/compile_commands.json
 
 (require 'rtags)
-(require 'company)
 (require 'flycheck-rtags)
-
-(add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
-(setq rtags-completions-enabled t)
-(setq rtags-path "/home/johast/hacking/rtags/build/bin")
-(setq rtags-process-flags "-j 4 --no-filesystem-watcher")
 
 ;; ensure that we use only rtags checking
 ;; https://github.com/Andersbakken/rtags#optional-1
@@ -225,22 +219,27 @@
   (setq-local flycheck-highlighting-mode nil)
   (setq-local flycheck-check-syntax-automatically nil))
 
-;; install standard rtags keybindings. Do M-. on the symbol below to
-;; jump to definition and see the keybindings.
-(rtags-enable-standard-keybindings)
-;; comment this out if you don't have or don't use helm
-(setq rtags-use-helm t)
-(setq rtags-display-result-backend 'helm)
-;; company completion setup
-(setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
-(setq rtags-completions-enabled t)
+(defun within-dir-p(dir)
+  (string-prefix-p dir (buffer-file-name)))
+
+(setq my-rtags-projects nil)
+(defun setup-rtags ()
+  (interactive)
+  (when (cl-find-if 'within-dir-p my-rtags-projects)
+    (setq-local rtags-completions-enabled t)
+    (rtags-start-process-unless-running)
+    (rtags-enable-standard-keybindings)
+    (setq-local rtags-use-helm t)
+    (setq-local rtags-display-result-backend 'helm)
+    ;; company completion setup
+    (setq-local rtags-autostart-diagnostics t)
+    (rtags-diagnostics)
+    (setup-flycheck-rtags)))
+
+(setq rtags-path "/home/johast/hacking/rtags/build/bin")
+(setq rtags-process-flags "-j 4 --no-filesystem-watcher")
 (push 'company-rtags company-backends)
-(global-company-mode)
-(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-;; use rtags flycheck mode -- clang warnings shown inline
-;; c-mode-common-hook is also called by c++-mode
-(add-hook 'c-mode-common-hook #'setup-flycheck-rtags)
+(add-hook 'c-mode-common-hook (function setup-rtags))
 
 ;; Use Auto-newline by default
 (add-hook 'c-mode-common-hook '(lambda () (c-toggle-auto-state 1)))

@@ -34,12 +34,4 @@
         (t (self-insert-command (or arg 1)))))
 (global-set-key "%" 'match-paren)
 
-(require 'auto-complete)
-(global-auto-complete-mode t)
-
-(require 'ac-etags)
-(eval-after-load "etags"
-  '(progn
-     (ac-etags-setup)))
-
 (provide 'my-general-editing-settings)

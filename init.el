@@ -24,9 +24,8 @@
     zenburn-theme
 ;;    column-marker
     ace-jump-mode
-    key-chord auto-complete
+    key-chord
     clang-format
-    ac-etags
     magit
     pyvenv
     adoc-mode
@@ -93,6 +92,9 @@
 
 (setq org-startup-indented t)
 (global-set-key "\C-cl" 'org-store-link)
+
+(require 'company)
+(global-company-mode)
 
 (require 'column-marker)
 
@@ -170,7 +172,7 @@
  ;; If there is more than one, they won't work right.
  '(org-todo-keywords '((sequence "TODO" "WAITING" "DONE")))
  '(package-selected-packages
-   '(helm-rtags company-rtags flycheck-rtags helm flycheck company rtags rust-mode go-mode meson-mode typescript-mode markdown-mode json-mode adoc-mode plantuml-mode zenburn-theme pyvenv magit key-chord clang-format ace-jump-mode ac-etags))
+   '(helm-rtags company-rtags flycheck-rtags helm flycheck company rtags rust-mode go-mode meson-mode typescript-mode markdown-mode json-mode adoc-mode plantuml-mode zenburn-theme pyvenv magit key-chord clang-format ace-jump-mode))
  '(show-trailing-whitespace t)
  '(sql-sqlite-program "sqlite3")
  '(warning-suppress-types '(((package reinitialization))))

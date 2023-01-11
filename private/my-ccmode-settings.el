@@ -250,14 +250,13 @@
 
 (define-key c-mode-base-map (kbd "M-.") (function rtags-find-symbol-at-point))
 (define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-at-point))
+(define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
 
 (define-key c-mode-base-map (kbd "C-c 1") (function c-set-readable-indentation))
 (define-key c-mode-base-map (kbd "C-c 2") (function c-set-horrible-indentation))
 (define-key c-mode-base-map (kbd "C-c g") (function c-insert-include-guard))
 (define-key c-mode-base-map (kbd "C-c C-f") (function c-format-parentheses-contents))
 (add-hook 'c-mode-common-hook '(lambda () (column-marker-3 80)))
-(add-hook 'c-mode-common-hook '(lambda ()
- (add-to-list 'ac-sources 'ac-source-etags)))
 
 (setq ff-other-file-alist
       '(("\\.cc\\'"  (".hh" ".h"))

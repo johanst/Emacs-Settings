@@ -10,11 +10,6 @@
 ;;                         ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 
-;; (setq url-proxy-services
-;;   '(("no_proxy" . "^\\(localhost\\|10.*\\)")
-;;     ("http" . "http.proxy.com:port")
-;;     ("https" . "https.proxy.com:port")))
-
 (package-initialize)
 
 (setq url-http-attempt-keepalives nil)

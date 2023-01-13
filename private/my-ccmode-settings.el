@@ -219,6 +219,18 @@
   (setq-local flycheck-highlighting-mode nil)
   (setq-local flycheck-check-syntax-automatically nil))
 
+(require 'irony)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(unless (irony--find-server-executable) (call-interactively #'irony-install-server))
+
+(require 'irony-eldoc)
+(add-hook 'irony-mode-hook (function irony-eldoc))
+
+(require 'company-irony)
+(push 'company-irony company-backends)
+
+(require 'flycheck-irony)
+
 (defun within-dir-p(dir)
   (string-prefix-p dir (buffer-file-name)))
 
@@ -236,12 +248,22 @@
     ;; company completion setup
     (setq-local rtags-autostart-diagnostics t)
     (rtags-diagnostics)
-    (setup-flycheck-rtags)))
+    (setup-flycheck-rtags)
+    ;; use irony-mode along with rtags, but just for eldoc
+    (irony-mode t)))
 
 (setq rtags-path "/home/johast/hacking/rtags/build/bin")
-(setq rtags-process-flags "-j 4 --no-filesystem-watcher")
+(setq rtags-process-flags "-j 4")
 (push 'company-rtags company-backends)
 (add-hook 'c-mode-common-hook (function setup-rtags))
+
+(setq my-irony-projects nil)
+(defun setup-irony ()
+  (interactive)
+  (when (cl-find-if 'within-dir-p my-irony-projects)
+    (flycheck-irony-setup)
+    (irony-mode t)))
+(add-hook 'c-mode-common-hook (function setup-irony))
 
 ;; Use Auto-newline by default
 (add-hook 'c-mode-common-hook '(lambda () (c-toggle-auto-state 1)))

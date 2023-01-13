@@ -3,7 +3,7 @@
   (package-install 'use-package))
 
 (require 'package)
-(require 'cl)
+(require 'cl-lib)
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
@@ -50,7 +50,7 @@
 
 (defun ensure-packages-install-missing ()
   (interactive)
-  (unless (every 'identity (ensure-packages-installed-p))
+  (unless (cl-every 'identity (ensure-packages-installed-p))
   ;; check for new packages (package versions)
   (message "%s" "Emacs is now refreshing its package database...")
   (package-refresh-contents)

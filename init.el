@@ -29,13 +29,20 @@
     magit
     pyvenv
     adoc-mode
-    helm
     company
     flycheck
+    helm
     rtags
-    company-rtags
     flycheck-rtags
     helm-rtags
+    company-rtags
+    irony
+    irony-eldoc
+    company-irony
+    flycheck-irony
+    rust-mode
+    rustic
+    lsp-mode
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -175,7 +182,7 @@
  ;; If there is more than one, they won't work right.
  '(org-todo-keywords '((sequence "TODO" "WAITING" "DONE")))
  '(package-selected-packages
-   '(flycheck-irony company-irony irony-eldoc irony helm-rtags company-rtags flycheck-rtags helm flycheck company rtags rust-mode go-mode meson-mode typescript-mode markdown-mode json-mode adoc-mode plantuml-mode zenburn-theme pyvenv magit key-chord clang-format ace-jump-mode))
+   '(lsp-mode flycheck-irony company-irony irony-eldoc irony helm-rtags company-rtags flycheck-rtags helm flycheck company rtags rust-mode go-mode meson-mode typescript-mode markdown-mode json-mode adoc-mode plantuml-mode zenburn-theme pyvenv magit key-chord clang-format ace-jump-mode))
  '(show-trailing-whitespace t)
  '(sql-sqlite-program "sqlite3")
  '(warning-suppress-types '(((package reinitialization))))

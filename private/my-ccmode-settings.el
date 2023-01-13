@@ -229,6 +229,8 @@
     (setq-local rtags-completions-enabled t)
     (rtags-start-process-unless-running)
     (rtags-enable-standard-keybindings)
+    (local-set-key (kbd "M-.") (function rtags-find-symbol-at-point))
+    (local-set-key (kbd "M-,") (function rtags-find-references-at-point))
     (setq-local rtags-use-helm t)
     (setq-local rtags-display-result-backend 'helm)
     ;; company completion setup
@@ -247,8 +249,6 @@
 (add-hook 'c-mode-common-hook '(lambda () (setq indent-tabs-mode nil)))
 (add-hook 'c-mode-common-hook '(lambda () (setq c-tab-always-indent t)))
 
-(define-key c-mode-base-map (kbd "M-.") (function rtags-find-symbol-at-point))
-(define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-at-point))
 (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
 
 (define-key c-mode-base-map (kbd "C-c o") (function ff-find-other-file))

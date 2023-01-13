@@ -251,6 +251,7 @@
 (define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-at-point))
 (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
 
+(define-key c-mode-base-map (kbd "C-c o") (function ff-find-other-file))
 (define-key c-mode-base-map (kbd "C-c 1") (function c-set-readable-indentation))
 (define-key c-mode-base-map (kbd "C-c 2") (function c-set-horrible-indentation))
 (define-key c-mode-base-map (kbd "C-c g") (function c-insert-include-guard))
